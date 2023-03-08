@@ -19,6 +19,7 @@ function searchBox() {
       event.preventDefault();
       searchRadius = document.getElementById("radius-select").value;
       if(searchLat!== null && searchLong !== null && searchRadius !== null){
+        console.log("Search radius: " + searchRadius + "Search latitude: " + searchLat + "Search longitude: " + searchLong);
         getRoutes(searchLat, searchLong, searchRadius);
       }
     });
@@ -38,7 +39,8 @@ function getRoutes(searchLat, searchLong, searchRadius) {
       loadMap(routes);
     }
   };
-  url = "get_data.php?lat=" + searchLat + "&long=" + searchLong + "&radius=" + searchRadius;
+  console.log("Search radius: " + searchRadius);
+  url = "get_data.php?searchLat=" + searchLat + "&searchLong=" + searchLong + "&searchRadius=" + searchRadius;
   // Send the AJAX request to the server
   xhr.open("GET", url);
   xhr.send();
@@ -57,6 +59,11 @@ function loadMap(routes) {
   directionsDisplay.setMap(map);
 
   var routeSelect = document.getElementById("route-select");
+
+  //delete any existing options
+  for (var i = routeSelect.options.length - 1; i >= 0; i--) {
+    routeSelect.remove(i);
+  }
 
   // Loop through the routes and add them to the select dropdown
   for (var i = 0; i < routes.length; i++) {

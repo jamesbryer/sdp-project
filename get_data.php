@@ -1,8 +1,5 @@
 <?php
 
-$sql_test = "SELECT *
-FROM routes
-WHERE (3959 * acos(cos(radians(" . $_GET["searchLat"] . ")) * cos(radians(start_lat)) * cos(radians(start_long) - radians(" . $_GET["searchLong"] . ")) + sin(radians(" . $_GET["searchLat"] . ")) * sin(radians(start_lat)))) <=" . $_GET["radius"];
 // Connect to the database
 $dsn = 'mysql:host=localhost;port=8888;dbname=routes;';
 $username = 'root';
@@ -15,10 +12,19 @@ try {
     exit;
 }
 
-// Select all the routes from the database
-$table = "routes";
-$sql = "SELECT * FROM routes";
-$stmt = $pdo->query($sql);
+$searchRadius = $_GET['searchRadius'];
+$searchLat = $_GET['searchLat'];
+$searchLong = $_GET['searchLong'];
+
+$sql = "SELECT * FROM routes WHERE ( 3959 * acos( cos( radians(:searchLat) ) * cos( radians( start_lat ) ) * cos( radians( start_long ) - radians(:searchLong) ) + sin( radians(:searchLat) ) * sin( radians( start_lat ) ) ) ) < :searchRadius";
+
+$stmt = $pdo->prepare($sql);
+
+$stmt->bindParam(':searchRadius', $searchRadius);
+$stmt->bindParam(':searchLat', $searchLat);
+$stmt->bindParam(':searchLong', $searchLong);
+
+$stmt->execute();
 
 // Fetch the routes as an associative array
 $routes = array();
