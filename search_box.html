@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Maps API Search Box</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1A6_CP0O4QgqpszRB1t06lWtjCi3X7w0&libraries=places"></script>
+    <script>
+      function searchBox() {
+        var input = document.getElementById("search-box");
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        google.maps.event.addListener(
+          autocomplete,
+          "place_changed",
+          function () {
+            var place = autocomplete.getPlace();
+            var searchLat = place.geometry.location.lat();
+            var searchLong = place.geometry.location.lng();
+            console.log(
+              "Latitude: " + searchLat + ", Longitude: " + searchLong
+            );
+          }
+        );
+      }
+      window.onload = searchBox;
+    </script>
+  </head>
+  <body>
+    <input id="search-box" type="text" placeholder="Search..." />
+  </body>
+</html>
