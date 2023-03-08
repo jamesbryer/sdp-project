@@ -8,23 +8,50 @@ $password = 'root';
 try {
     $pdo = new PDO($dsn, $username, $password);
 } catch (PDOException $e) {
-    echo 'Connection failed: ' . $e->getMessage();
+    // Add error handling for connection errors
+    http_response_code(500);
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'Failed to connect to the database']);
     exit;
 }
 
-$searchRadius = $_GET['searchRadius'];
-$searchLat = $_GET['searchLat'];
-$searchLong = $_GET['searchLong'];
+// Get search parameters from GET request
+$searchRadius = $_GET['searchRadius'] ?? null;
+$searchLat = $_GET['searchLat'] ?? null;
+$searchLong = $_GET['searchLong'] ?? null;
 
-$sql = "SELECT * FROM routes WHERE ( 3959 * acos( cos( radians(:searchLat) ) * cos( radians( start_lat ) ) * cos( radians( start_long ) - radians(:searchLong) ) + sin( radians(:searchLat) ) * sin( radians( start_lat ) ) ) ) < :searchRadius";
+// Validate search parameters
+if (!is_numeric($searchRadius) || $searchRadius <= 0) {
+    http_response_code(400);
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'Invalid search radius']);
+    exit;
+}
 
+if (!is_numeric($searchLat) || !is_numeric($searchLong)) {
+    http_response_code(400);
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'Invalid search coordinates']);
+    exit;
+}
+
+// Prepare SQL statement
+$sql = "SELECT * FROM routes WHERE ( 3959 * acos( cos( radians(:searchLat) ) * cos( radians( start_lat ) ) * cos( radians( start_long ) - radians(:searchLong) ) + sin( radians(:searchLat) ) * sin( radians( start_lat ) ) ) ) < :searchRadius LIMIT 100";
 $stmt = $pdo->prepare($sql);
 
-$stmt->bindParam(':searchRadius', $searchRadius);
-$stmt->bindParam(':searchLat', $searchLat);
-$stmt->bindParam(':searchLong', $searchLong);
+// Bind search parameters to prepared statement
+$stmt->bindParam(':searchRadius', $searchRadius, PDO::PARAM_INT);
+$stmt->bindParam(':searchLat', $searchLat, PDO::PARAM_STR);
+$stmt->bindParam(':searchLong', $searchLong, PDO::PARAM_STR);
 
-$stmt->execute();
+// Execute SQL statement
+if (!$stmt->execute()) {
+    // Add error handling for SQL errors
+    http_response_code(500);
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'Failed to retrieve routes']);
+    exit;
+}
 
 // Fetch the routes as an associative array
 $routes = array();

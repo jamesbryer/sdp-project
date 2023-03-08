@@ -49,8 +49,8 @@ function getRoutes(searchLat, searchLong, searchRadius) {
 function loadMap(routes) {
   // Create a new Google Map
   var map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 10,
-    center: { lat: 37.7749, lng: -122.4194 },
+    zoom: 5,
+    center: {lat: 51.5074, lng: -0.1278},
   });
 
   var directionsService = new google.maps.DirectionsService();
@@ -79,12 +79,8 @@ function loadMap(routes) {
     event.preventDefault();
 
     var selectedIndex = routeSelect.selectedIndex;
-    if (selectedIndex < 1) {
-      return;
-    }
-
-    var selectedRoute = routes[selectedIndex - 1];
-
+    var selectedRoute = routes[selectedIndex];
+    
     var start = new google.maps.LatLng(
       parseFloat(selectedRoute.start_lat),
       parseFloat(selectedRoute.start_long)
