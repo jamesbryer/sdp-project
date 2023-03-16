@@ -20,21 +20,6 @@ $searchRadius = $_GET['searchRadius'] ?? null;
 $searchLat = $_GET['searchLat'] ?? null;
 $searchLong = $_GET['searchLong'] ?? null;
 
-// Validate search parameters
-if (!is_numeric($searchRadius) || $searchRadius <= 0) {
-    http_response_code(400);
-    header('Content-Type: application/json');
-    echo json_encode(['error' => 'Invalid search radius']);
-    exit;
-}
-
-if (!is_numeric($searchLat) || !is_numeric($searchLong)) {
-    http_response_code(400);
-    header('Content-Type: application/json');
-    echo json_encode(['error' => 'Invalid search coordinates']);
-    exit;
-}
-
 // Prepare SQL statement
 $sql = "SELECT * FROM routes WHERE ( 3959 * acos( cos( radians(:searchLat) ) * cos( radians( start_lat ) ) * cos( radians( start_long ) - radians(:searchLong) ) + sin( radians(:searchLat) ) * sin( radians( start_lat ) ) ) ) < :searchRadius LIMIT 100";
 $stmt = $pdo->prepare($sql);

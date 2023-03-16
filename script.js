@@ -6,7 +6,7 @@ function searchBox() {
     var searchLat = place.geometry.location.lat();
     var searchLong = place.geometry.location.lng();
     console.log("Latitude: " + searchLat + ", Longitude: " + searchLong);
-    
+
     // Prevent form submission when enter key is pressed
     input.addEventListener("keydown", function (event) {
       if (event.key === "Enter") {
@@ -14,17 +14,17 @@ function searchBox() {
       }
     });
 
-    var searchForm = document.getElementById("location-form");
-    searchForm.addEventListener("submit", function (event) {
-      event.preventDefault();
-      searchRadius = document.getElementById("radius-select").value;
-      if(searchLat!== null && searchLong !== null && searchRadius !== null){
-        console.log("Search radius: " + searchRadius + "Search latitude: " + searchLat + "Search longitude: " + searchLong);
+    var searchRadiusSelect = document.getElementById("radius-select");
+    searchRadiusSelect.addEventListener("change", function (event) {
+      var searchRadius = searchRadiusSelect.value;
+      if (searchLat !== null && searchLong !== null && searchRadius !== null) {
+        console.log("Search radius: " + searchRadius + ", Search latitude: " + searchLat + ", Search longitude: " + searchLong);
         getRoutes(searchLat, searchLong, searchRadius);
       }
     });
   });
 }
+
 window.onload = searchBox;
 
 
@@ -50,7 +50,7 @@ function loadMap(routes) {
   // Create a new Google Map
   var map = new google.maps.Map(document.getElementById("map"), {
     zoom: 5,
-    center: {lat: 51.5074, lng: -0.1278},
+    center: { lat: 51.5074, lng: -0.1278 },
   });
 
   var directionsService = new google.maps.DirectionsService();
@@ -62,7 +62,10 @@ function loadMap(routes) {
 
   //delete any existing options
   for (var i = routeSelect.options.length - 1; i >= 0; i--) {
-    routeSelect.remove(i);
+    //dont remove the first option which is the select a radius option
+    if (i != 0) {
+      routeSelect.remove(i);
+    }
   }
 
   // Loop through the routes and add them to the select dropdown
@@ -74,13 +77,13 @@ function loadMap(routes) {
   }
 
   // Handle form submission
-  var routeForm = document.getElementById("route-form");
+  var routeForm = document.getElementById("location-form");
   routeForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
     var selectedIndex = routeSelect.selectedIndex;
-    var selectedRoute = routes[selectedIndex];
-    
+    var selectedRoute = routes[selectedIndex - 1];
+
     var start = new google.maps.LatLng(
       parseFloat(selectedRoute.start_lat),
       parseFloat(selectedRoute.start_long)
