@@ -1,3 +1,11 @@
+// Create a new Google Map
+var map = new google.maps.Map(document.getElementById("map"), {
+  zoom: 5,
+  center: { lat: 51.5074, lng: -0.1278 },
+});
+
+window.onload = searchBox;
+
 function searchBox() {
   var input = document.getElementById("search-box");
   var autocomplete = new google.maps.places.Autocomplete(input);
@@ -25,7 +33,6 @@ function searchBox() {
   });
 }
 
-window.onload = searchBox;
 
 
 function getRoutes(searchLat, searchLong, searchRadius) {
@@ -39,7 +46,7 @@ function getRoutes(searchLat, searchLong, searchRadius) {
       loadMap(routes);
     }
   };
-  console.log("Search radius: " + searchRadius);
+  console.log("Making db request...");
   url = "get_data.php?searchLat=" + searchLat + "&searchLong=" + searchLong + "&searchRadius=" + searchRadius;
   // Send the AJAX request to the server
   xhr.open("GET", url);
@@ -47,11 +54,7 @@ function getRoutes(searchLat, searchLong, searchRadius) {
 }
 
 function loadMap(routes) {
-  // Create a new Google Map
-  var map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 5,
-    center: { lat: 51.5074, lng: -0.1278 },
-  });
+
 
   var directionsService = new google.maps.DirectionsService();
   var directionsDisplay = new google.maps.DirectionsRenderer();
@@ -77,8 +80,8 @@ function loadMap(routes) {
   }
 
   // Handle form submission
-  var routeForm = document.getElementById("location-form");
-  routeForm.addEventListener("submit", function (event) {
+  //var routeForm = document.getElementById("route-select");
+  routeSelect.addEventListener("change", function (event) {
     event.preventDefault();
 
     var selectedIndex = routeSelect.selectedIndex;
