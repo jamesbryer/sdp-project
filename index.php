@@ -2,7 +2,6 @@
 include "header.php";
 ?>
 
-
 <div class="container" id="container">
   <form id="location-form">
     <div class="form-row">
@@ -34,6 +33,8 @@ include "header.php";
 
   <div id="map" style="height: 800px; width: 100%"></div>
 </div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4zHL_BVdWGuaMWXwxk4iCNKlGNF-BJoU&region=UK&libraries=places&callback=Function.prototype">
+</script>
 <script src="script.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
 </script>
