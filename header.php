@@ -9,21 +9,18 @@ session_start();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>twisties - Road Finder</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <div class="container">
             <a href="/sdp-project/" class="navbar-brand">
                 <img class="d-inline-block" src="/sdp-project/assets/logo_1.png" alt="Logo" width="110px" height="55px">
                 Road Discoverer
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -43,13 +40,12 @@ session_start();
                     }
                     if (isset($_SESSION['user_id'])) {
                     ?>
-                    <li class="nav-link"><a class="nav-link" href="#"><?php echo $_SESSION["user_uid"]; ?></a></li>
-                    <li class="nav-link"><a class="nav-link"
-                            href="/sdp-project/account-login/includes/logout.inc.php">Logout</a></li>
+                        <li class="nav-link"><a class="nav-link" href="#"><?php echo $_SESSION["user_uid"]; ?></a></li>
+                        <li class="nav-link"><a class="nav-link" href="/sdp-project/account-login/includes/logout.inc.php">Logout</a></li>
                     <?php
                     } else {
                     ?>
-                    <li class="nav-link"><a class="nav-link" href="/sdp-project/account-login/">Account</a></li>
+                        <li class="nav-link"><a class="nav-link" href="/sdp-project/account-login/">Account</a></li>
 
                     <?php
                     }
