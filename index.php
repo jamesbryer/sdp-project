@@ -4,13 +4,13 @@ include "header.php";
 
 <div class="container" id="container">
   <form id="location-form">
-    <div class="form-row">
+    <div class="form-row" style="padding: 10px;">
       <div class="col">
         <input id="search-box" type="search" placeholder="Enter your location" class="form-control centre" required />
       </div>
     </div>
-    <div class="form-row">
-      <div class="col">
+    <div class="form-row" style="padding-bottom: 10px; padding-left: 10px; padding-right: 10px;">
+      <div class=" col">
         <select id="radius-select" class="custom-select mr-sm-2 centre" required>
           <option value="" selected disabled>Select a radius</option>
           <option value="5">5 miles</option>
