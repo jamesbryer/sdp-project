@@ -1,6 +1,12 @@
 <?php
 
 include "../header.php";
+
+//redirect user from login page if they are already logged in
+if (isset($_SESSION['user_uid'])) {
+    header("Location: ../");
+    exit();
+}
 ?>
 <div style="padding-top: 50px;"></div>
 <div class="container">
@@ -20,7 +26,6 @@ include "../header.php";
                         <input class="form-control centre" type="password" name="pwdrepeat" placeholder="Repeat password" required>
                     </div>
                     <div class="form-group"><input class="form-control centre" type="text" name="email" placeholder="Email" required></div>
-
                     <button class="btn" type="submit" name="submit">Sign Up</button>
                 </form>
             </div>

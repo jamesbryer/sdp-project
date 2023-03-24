@@ -40,7 +40,8 @@ session_start();
                     }
                     if (isset($_SESSION['user_id'])) {
                     ?>
-                        <li class="nav-link"><a class="nav-link" href="#"><?php echo $_SESSION["user_uid"]; ?></a></li>
+                        <li class="nav-link"><a class="nav-link" href="/sdp-project/my-account/"><?php echo $_SESSION["user_uid"]; ?></a>
+                        </li>
                         <li class="nav-link"><a class="nav-link" href="/sdp-project/account-login/includes/logout.inc.php">Logout</a></li>
                     <?php
                     } else {

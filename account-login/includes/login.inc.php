@@ -22,5 +22,5 @@ if (isset($_POST["submit"])) {
     // going back to front page
     header("location: ../../");
 } else {
-    header("location: ../account-login/index.php?error=nodata");
+    //header("location: ../account-login/index.php?error=nodata");
 }

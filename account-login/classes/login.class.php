@@ -9,12 +9,12 @@ class Login extends Dbh
 
         if (!$stmt->execute(array($uid, $uid))) {
             $stmt = null;
-            header("location: ../account-login/index.php?error=stmtfailed");
+            header("location: ../account-login?error=stmtfailed");
             exit();
         }
         if ($stmt->rowCount() == 0) {
             $stmt = null;
-            header("location: ../account-login/index.php?error=usernotfound");
+            header("location: ../?error=usernotfound");
             exit();
         }
 
@@ -22,18 +22,18 @@ class Login extends Dbh
         $checkPwd = password_verify($pwd, $pwdHashed[0]['users_pwd']);
         if ($checkPwd == false) {
             $stmt = null;
-            header("location: ../account-login/index.php?error=wrongpwd");
+            header("location: ../?error=wrongpwd");
             exit();
         } elseif ($checkPwd == true) {
             $stmt = $this->connect()->prepare("SELECT * from users WHERE users_uid = ? OR users_email = ? AND users_pwd = ?;");
             if (!$stmt->execute(array($uid, $uid, $pwdHashed[0]['users_pwd']))) {
                 $stmt = null;
-                header("location: ../account-login/index.php?error=stmtfailed");
+                header("location: ../?error=stmtfailed");
                 exit();
             }
             if ($stmt->rowCount() == 0) {
                 $stmt = null;
-                header("location: ../account-login/index.php?error=usernotfound");
+                header("location: ../?error=usernotfound");
                 exit();
             }
 
