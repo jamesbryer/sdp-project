@@ -14,5 +14,5 @@ if (isset($_SESSION["comments"])) {
         echo $comment["comment"];
     }
 } else {
-    echo "button not pressed!";
+    echo "No comments!";
 }

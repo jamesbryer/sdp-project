@@ -1,10 +1,10 @@
 <?php
 
-class GetComments extends Dbh
+class GetLikes extends Dbh
 {
-    protected function getComments($user_id)
+    protected function getLikes($user_id)
     {
-        $stmt = $this->connect()->prepare("SELECT * FROM comments WHERE users_id = ?;");
+        $stmt = $this->connect()->prepare("SELECT * FROM likes WHERE users_id = ?;");
 
         // check if stmt failed
         if (!$stmt->execute(array($user_id))) {
@@ -17,8 +17,8 @@ class GetComments extends Dbh
             $array = array();
             return $array;
         }
-        $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $_SESSION["comments"] = $comments;
+        $likes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $_SESSION["likes"] = $likes;
         $stmt = null;
     }
 }
