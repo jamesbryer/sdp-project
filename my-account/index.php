@@ -28,3 +28,7 @@ if (isset($_SESSION["likes"])) {
 } else {
     echo "No likes!";
 }
+
+?>
+
+<a href="https://www.waze.com/ul?ll=<?php echo "51"; ?>.5055,-0.0754&navigate=yes">Open in Waze</a>
