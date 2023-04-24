@@ -6,3 +6,7 @@
 .centre {
     width: 100%;
 }
+
+#info-box {
+    display: none;
+}

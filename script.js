@@ -5,6 +5,8 @@ var map = new google.maps.Map(document.getElementById("map"), {
 });
 
 window.onload = searchBox;
+let commentSubmitBtn = document.getElementById("comment-submit");
+commentSubmitBtn.addEventListener("click", submitComment);
 
 function searchBox() {
   var input = document.getElementById("search-box");
@@ -33,8 +35,6 @@ function searchBox() {
   });
 }
 
-
-
 function getRoutes(searchLat, searchLong, searchRadius) {
   // Create the AJAX request object
   var xhr = new XMLHttpRequest();
@@ -47,8 +47,96 @@ function getRoutes(searchLat, searchLong, searchRadius) {
     }
   };
   console.log("Making db request...");
-  url = "get_data.php?searchLat=" + searchLat + "&searchLong=" + searchLong + "&searchRadius=" + searchRadius;
+  url = "db-request/get_roads.php?searchLat=" + searchLat + "&searchLong=" + searchLong + "&searchRadius=" + searchRadius;
   // Send the AJAX request to the server
+  xhr.open("GET", url);
+  xhr.send();
+}
+
+function getComments(routeID, callback) {
+  // Create the AJAX request object
+  var xhr = new XMLHttpRequest();
+  // Set up the AJAX request
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      // Parse the JSON data
+      var comments = JSON.parse(xhr.responseText);
+      callback(comments);
+    }
+  };
+  console.log("Making db request...");
+  url = "db-request/get_comments.php?routeID=" + routeID;
+  // Send the AJAX request to the server
+  xhr.open("GET", url);
+  xhr.send();
+}
+
+// Define the function for handling comment submission
+function submitComment(event) {
+  event.preventDefault(); // Prevent the default form submission behavior
+  var comment = document.getElementById("comment-input").value;
+
+  if (comment !== "") {  //access the text of the selected option (this is the routeID)
+    var dropdown = document.getElementById("route-select");
+    var routeID = dropdown.options[dropdown.selectedIndex].text;
+
+    // Send the comment to the server using AJAX
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE && comment !== "") {
+        // Handle not logged in error
+        console.log("Comment submitted!");
+        // Clear the comment input
+        document.getElementById("comment-input").value = "";
+        document.getElementById("comment-input").placeholder = "Thanks for your comment!";
+        // Remove the event listener to prevent multiple submissions
+        commentSubmitBtn.removeEventListener("click", submitComment);
+        // Add the event listener again for the next submission
+        commentSubmitBtn.addEventListener("click", submitComment);
+        //refresh comments to show new comment
+        getComments(routeID, addCommentsToArea);
+      }
+    };
+    xhr.open("POST", "db-request/add-comment.php");
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send("comment=" + comment + "&routeID=" + routeID);
+  } else {
+    document.getElementById("comment-input").placeholder = "Please enter a comment!";
+  }
+
+}
+
+// Define the function for adding comments to the comment area
+function addCommentsToArea(comments) {
+  var infobox = document.getElementById("info-box");
+  infobox.style.display = "block";
+  var commentArea = document.getElementById("comment-area");
+  commentArea.innerHTML = "";
+
+  console.log("Adding comments...");
+  for (var i = 0; i < comments.length; i++) {
+    console.log("Comment added!");
+    var comment = document.createElement("p");
+    comment.innerHTML = comments[i].comment;
+    commentArea.appendChild(comment);
+  }
+
+  // Handle comment input
+  var commentSubmitBtn = document.getElementById("comment-submit");
+  commentSubmitBtn.addEventListener("click", submitComment);
+}
+
+// Define the function for making an AJAX request to get comments
+function getComments(routeID, callback) {
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      var comments = JSON.parse(xhr.responseText);
+      callback(comments);
+    }
+  };
+  console.log("Making db request...");
+  url = "db-request/get_comments.php?routeID=" + routeID;
   xhr.open("GET", url);
   xhr.send();
 }
@@ -80,12 +168,10 @@ function loadMap(routes) {
   }
 
   // Handle form submission
-  //var routeForm = document.getElementById("route-select");
   routeSelect.addEventListener("change", function (event) {
     event.preventDefault();
 
-    var selectedIndex = routeSelect.selectedIndex;
-    var selectedRoute = routes[selectedIndex - 1];
+    var selectedRoute = routes[routeSelect.selectedIndex - 1];
 
     var start = new google.maps.LatLng(
       parseFloat(selectedRoute.start_lat),
@@ -107,5 +193,8 @@ function loadMap(routes) {
         directionsDisplay.setDirections(result);
       }
     });
+
+    // Get the comments for the selected route
+    getComments(selectedRoute.id, addCommentsToArea);
   });
 }

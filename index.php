@@ -31,7 +31,21 @@ include "header.php";
             </div>
         </div>
     </form>
-
+    <div id="info-box">
+        <form id="comment-form">
+            <div class="form-row">
+                <div class="col">
+                    <h5>Comments:</h5>
+                    <div id="comment-area"></div>
+                </div>
+                <div class="col">
+                    <input id="comment-input" type="text" placeholder="Enter your comment" class="form-control centre"
+                        required />
+                    <button class=" btn btn-outline-secondary" id="comment-submit">Comment</button>
+                </div>
+            </div>
+        </form>
+    </div>
     <div id="map" style="height: 800px; width: 100%"></div>
 </div>
 <script
