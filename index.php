@@ -45,6 +45,7 @@ include "header.php";
                 </div>
             </div>
         </form>
+        <div class="form-row" id="waze-link"></div>
     </div>
     <div id="map" style="height: 800px; width: 100%"></div>
 </div>

@@ -141,6 +141,45 @@ function getComments(routeID, callback) {
   xhr.send();
 }
 
+function getUserLocation(callback) {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
+      callback([latitude, longitude]);
+    }, function (error) {
+      callback(null);
+    });
+  } else {
+    callback(null);
+  }
+}
+
+
+function creatWazeLink(start_lat, start_lon, end_lat, end_lon) {
+  getUserLocation(function (coordinates) {
+    if (coordinates) {
+      console.log("Latitude: " + coordinates[0] + " Longitude: " + coordinates[1]);
+      var wazeDiv = document.getElementById("waze-link");
+      //empty all content from wazeDiv
+      wazeDiv.innerHTML = "";
+      var wazeButton = document.createElement("button");
+      wazeButton.innerHTML = "Open in Waze";
+      wazeButton.classList.add("btn");
+      wazeButton.classList.add("btn-outline-secondary");
+      var wazeLink = document.createElement("a");
+      wazeLink.href = "https://www.waze.com/ul?from=" + coordinates[0] + "," + coordinates[1] + "&navigate=yes&via=" + start_lat + "," + start_lon + "&to=" + end_lat + "," + end_lon + "&z=10";
+      wazeLink.target = "_blank";
+      wazeLink.innerHTML = "Open in Waze";
+      wazeLink.appendChild(wazeButton);
+      wazeDiv.appendChild(wazeLink);
+    } else {
+      console.log("Could not get user location.");
+    }
+  });
+
+}
+
 function loadMap(routes) {
 
 
@@ -196,5 +235,6 @@ function loadMap(routes) {
 
     // Get the comments for the selected route
     getComments(selectedRoute.id, addCommentsToArea);
+    creatWazeLink(selectedRoute.start_lat, selectedRoute.start_long, selectedRoute.end_lat, selectedRoute.end_long);
   });
 }
