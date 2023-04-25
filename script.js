@@ -168,30 +168,21 @@ function getUserLocation(callback) {
   }
 }
 
-
-function creatWazeLink(start_lat, start_lon, end_lat, end_lon) {
-  getUserLocation(function (coordinates) {
-    if (coordinates) {
-      console.log("Latitude: " + coordinates[0] + " Longitude: " + coordinates[1]);
-      var wazeDiv = document.getElementById("waze-link");
-      //empty all content from wazeDiv
-      wazeDiv.innerHTML = "";
-      var wazeButton = document.createElement("button");
-      wazeButton.innerHTML = "Open in Waze";
-      wazeButton.classList.add("btn");
-      wazeButton.classList.add("btn-outline-secondary");
-      var wazeLink = document.createElement("a");
-      wazeLink.href = "https://www.waze.com/ul?from=" + coordinates[0] + "," + coordinates[1] + "&navigate=yes&via=" + start_lat + "," + start_lon + "&to=" + end_lat + "," + end_lon + "&z=10";
-      wazeLink.target = "_blank";
-      wazeLink.innerHTML = "Open in Waze";
-      wazeLink.appendChild(wazeButton);
-      //wazeDiv.appendChild(wazeLink);
-    } else {
-      console.log("Could not get user location.");
-    }
-  });
-
+function createWazeLink(start_lat, start_lon, end_lat, end_long) {
+  //get link element
+  var wazeButton = document.getElementById("gmap-link");
+  //empty waze button
+  wazeButton.innerHTML = "";
+  //create lat/lon strings
+  endLatLon = end_lat + "," + end_long;
+  startLatLon = start_lat + "," + start_lon;
+  const url = `https://www.google.com/maps/dir/?api=1&amp;destination=${encodeURIComponent(endLatLon)}&amp;waypoints=${encodeURIComponent(startLatLon)}&amp;travelmode=driving`;
+  //change waze button action
+  wazeButton.innerHTML = `<a class="btn btn-outline-primary btn-block" href="${decodeURIComponent(url)}" target="_blank">Open in Google Maps</a>`;
+  //make wazeDiv visible
+  wazeButton.style.display = "block";
 }
+
 
 function loadMap(routes) {
 
@@ -248,6 +239,6 @@ function loadMap(routes) {
 
     // Get the comments for the selected route
     getComments(selectedRoute.id, addCommentsToArea);
-    creatWazeLink(selectedRoute.start_lat, selectedRoute.start_long, selectedRoute.end_lat, selectedRoute.end_long);
+    createWazeLink(selectedRoute.start_lat, selectedRoute.start_long, selectedRoute.end_lat, selectedRoute.end_long);
   });
 }
