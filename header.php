@@ -47,7 +47,8 @@ session_start();
 
                     //if each page name is the current page, add the active class to the li
                     foreach ($pages as $pageName => $pageURL) {
-                        echo "<li class='nav-link'><a class='nav-link ' href='$pageURL'>$pageName</a></li>";
+                        $class = ($currentPage == $pageURL) ? "active" : "";
+                        echo "<li class='nav-link'><a class='nav-link $class' href='$pageURL'>$pageName</a></li>";
                     }
                     ?>
                 </ul>
