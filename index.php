@@ -3,51 +3,61 @@ include "header.php";
 ?>
 
 <div class="container" id="container">
-    <form id="location-form">
-        <div class="form-row" style="padding-top: 10px; padding-bottom:10px;">
-            <div class="col">
-                <input id="search-box" type="search" placeholder="Enter your location" class="form-control centre"
-                    required />
-            </div>
-        </div>
-        <div class="form-row" style="padding-bottom: 10px;">
-            <div class=" col">
-                <select id="radius-select" class="custom-select mr-sm-2 centre" required>
-                    <option value="" selected disabled>Select a radius</option>
-                    <option value="5">5 miles</option>
-                    <option value="10">10 miles</option>
-                    <option value="15">15 miles</option>
-                    <option value="20">20 miles</option>
-                    <option value="50">50 miles</option>
-                    <option value="100">100 miles</option>
-                    <option value="200">200 miles</option>
-                    <option value="100000">Unlimited</option>
-                </select>
-            </div>
-            <div class="col">
-                <select id="route-select" name="route" class="custom-select mr-sm-2 centre" style="width: 100%;">
-                    <option value="" selected disabled>Select a Route</option>
-                </select>
-            </div>
-        </div>
-    </form>
-    <div id="info-box">
-        <form id="comment-form">
-            <div class="form-row">
-                <div class="col">
-                    <h5>Comments:</h5>
-                    <div id="comment-area"></div>
+    <div class="row">
+        <div class="col-lg-4">
+            <form id="location-form">
+                <div class="row" style="padding-top: 10px; padding-bottom:10px;">
+                    <div class="col">
+                        <input id="search-box" type="search" placeholder="Enter your location"
+                            class="form-control centre" required />
+                    </div>
                 </div>
-                <div class="col">
-                    <input id="comment-input" type="text" placeholder="Enter your comment" class="form-control centre"
-                        required />
-                    <button class=" btn btn-outline-secondary" id="comment-submit">Comment</button>
+                <div class="row" style="padding-bottom: 10px;">
+                    <div class="col">
+                        <select id="radius-select" class="custom-select mr-sm-2 centre" required>
+                            <option value="" selected disabled>Select a radius</option>
+                            <option value="5">5 miles</option>
+                            <option value="10">10 miles</option>
+                            <option value="15">15 miles</option>
+                            <option value="20">20 miles</option>
+                            <option value="50">50 miles</option>
+                            <option value="100">100 miles</option>
+                            <option value="200">200 miles</option>
+                            <option value="100000">Unlimited</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-        </form>
-        <div class="form-row" id="waze-link"></div>
+                <div class="row">
+                    <div class="col">
+                        <select id="route-select" name="route" class="custom-select mr-sm-2 centre"
+                            style="width: 100%;">
+                            <option value="" selected disabled>Select a Route</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+            <form id="comment-form">
+                <div id="info-box" class="row" style="padding-top: 10px;">
+                    <div class="col">
+                        <div class="form-control">
+                            <h5>Comments:</h5>
+                            <div id="comment-area"></div>
+                            <input style="padding-bottom: 10px;" id="comment-input" type="text"
+                                placeholder="Enter your comment" class="form-control" required />
+                            <input type="button" value="Comment" class=" btn btn-outline-secondary form-control"
+                                id="comment-submit">
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="waze-link"></div>
+            </form>
+        </div>
+        <div class="col-lg-8" style="padding-top: 10px;">
+            <div id="map" style="height: 800px; width: 100%"></div>
+        </div>
     </div>
-    <div id="map" style="height: 800px; width: 100%"></div>
+
+
 </div>
 <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4zHL_BVdWGuaMWXwxk4iCNKlGNF-BJoU&region=UK&libraries=places&callback=Function.prototype">

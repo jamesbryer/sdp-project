@@ -4,9 +4,22 @@ var map = new google.maps.Map(document.getElementById("map"), {
   center: { lat: 51.5074, lng: -0.1278 },
 });
 
+//load the search box, which triggers all other function calls
 window.onload = searchBox;
+
+//get the elements to add event listeners to
 let commentSubmitBtn = document.getElementById("comment-submit");
+let commentTextField = document.getElementById("comment-input");
+//add event listener to submit button
 commentSubmitBtn.addEventListener("click", submitComment);
+//add event listener to comment field, check for enter key to prevent default form submission
+commentTextField.addEventListener('keydown', function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    submitComment(event);
+    console.log("Enter key pressed");
+  }
+});
 
 function searchBox() {
   var input = document.getElementById("search-box");
@@ -172,7 +185,7 @@ function creatWazeLink(start_lat, start_lon, end_lat, end_lon) {
       wazeLink.target = "_blank";
       wazeLink.innerHTML = "Open in Waze";
       wazeLink.appendChild(wazeButton);
-      wazeDiv.appendChild(wazeLink);
+      //wazeDiv.appendChild(wazeLink);
     } else {
       console.log("Could not get user location.");
     }
