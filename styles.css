@@ -14,3 +14,8 @@
 #gmap-link {
     display: none;
 }
+
+#map {
+    border-radius: 4px;
+    overflow: hidden;
+}

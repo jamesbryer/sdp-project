@@ -30,33 +30,27 @@ session_start();
                     <?php
                     //page names and urls
                     $pages = array(
-                        "Road Map" => "/sdp-project/",
-                        "Add to Map" => "/sdp-project/add-to-map/"
+                        "Road Map" => "/sdp-project/"
                     );
+                    if (isset($_SESSION['user_id'])) {
+                        //add the add to map page to $pages array if the user is logged in
+                        $pages["Add to Map"] = "/sdp-project/add-to-map/";
+                        //add the my account page to $pages array if the user is logged in
+                        $pages[$_SESSION["user_uid"]] = "/sdp-project/my-account/";
+                        //add the logout page to $pages array if the user is logged in
+                        $pages["Logout"] = "/sdp-project/account-login/includes/logout.inc.php";
+                    } else {
+                        //add the account login page to $pages array if the user is not logged in
+                        $pages["Account"] = "/sdp-project/account-login/";
+                    }
                     $currentPage = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
                     //if each page name is the current page, add the active class to the li
                     foreach ($pages as $pageName => $pageURL) {
-                        $class = ($currentPage == $pageURL) ? "active" : "";
-                        echo "<li class='nav-link'><a class='nav-link $class' href='$pageURL'>$pageName</a></li>";
-                    }
-                    if (isset($_SESSION['user_id'])) {
-                    ?>
-                    <li class="nav-link"><a class="nav-link"
-                            href="/sdp-project/my-account/"><?php echo $_SESSION["user_uid"]; ?></a>
-                    </li>
-                    <li class="nav-link"><a class="nav-link"
-                            href="/sdp-project/account-login/includes/logout.inc.php">Logout</a></li>
-                    <?php
-                    } else {
-                    ?>
-                    <li class="nav-link"><a class="nav-link" href="/sdp-project/account-login/">Account</a></li>
-
-                    <?php
+                        echo "<li class='nav-link'><a class='nav-link ' href='$pageURL'>$pageName</a></li>";
                     }
                     ?>
                 </ul>
             </div>
         </div>
-
     </nav>
