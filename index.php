@@ -35,9 +35,6 @@ include "header.php";
                         </select>
                     </div>
                 </div>
-                <div class="row" style="padding-top: 10px;">
-                    <div class="col" id="gmap-link"></div>
-                </div>
             </form>
             <form id="comment-form">
                 <div id="info-box" class="row" style="padding-top: 10px;">
@@ -47,10 +44,15 @@ include "header.php";
                             <div id="comment-area"></div>
                             <input style="margin-bottom: 3px;" id="comment-input" type="text"
                                 placeholder="Enter your comment" class="form-control" required />
-                            <input type="button" value="Comment" class="btn btn-outline-secondary form-control"
+                            <input type="button" value="Comment" class="btn btn-primary form-control btn-sm"
                                 id="comment-submit">
                         </div>
                     </div>
+                </div>
+            </form>
+            <form>
+                <div class="row" style="padding-top: 10px;">
+                    <div class="col" id="gmap-link"></div>
                 </div>
             </form>
         </div>
