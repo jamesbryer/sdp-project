@@ -3,10 +3,19 @@ include "../header.php";
 ?>
 
 <div class="container">
-    <div id="map">
+    <div class="row">
+        <div class="col">
+            <h3 style="margin-top: 5px;">Add to Map</h3>
+            <p id="welcome-text">Welcome! If you would like to contribute to our map, just click/tap the start point of
+                your road, then
+                the end point! Click submit and its all done!</p>
+        </div>
     </div>
-    <button id="submit-btn" class="btn btn-outline-secondary">Submit</button>
-    <button id="reset-btn" class="btn btn-outline-secondary">Reset</button>
+    <div class="row" id="buttons">
+        <div class="col"><button id="submit-btn" class="btn btn-outline-secondary btn-block">Submit</button></div>
+        <div class="col"><button id="reset-btn" class="btn btn-outline-secondary btn-block">Reset</button></div>
+    </div>
+    <div id="map" style="margin-top: 10px;"></div>
 </div>
 <br />
 

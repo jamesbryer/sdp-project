@@ -56,7 +56,7 @@ include "header.php";
                 </div>
             </form>
         </div>
-        <div class=" col-lg-8" style="padding-top: 10px;">
+        <div class="col-lg-8" style="padding-top: 10px;">
             <div id="map" style="height: 800px; width: 100%"></div>
         </div>
     </div>

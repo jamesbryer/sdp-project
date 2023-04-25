@@ -43,7 +43,16 @@ function initMap() {
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
-                        alert(xhr.responseText);
+                        //alert(xhr.responseText);
+                        var text = document.getElementById("welcome-text");
+                        //change text to confirmation message
+                        text.innerHTML = "Route saved! Thank you for your contribution.";
+                        //remove submit button
+                        var submitBtn = document.getElementById("buttons");
+                        submitBtn.remove();
+                        //remove map
+                        var map = document.getElementById("map");
+                        map.remove();
                     }
                 };
                 xhr.open("POST", "save_route.php");

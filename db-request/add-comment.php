@@ -32,5 +32,6 @@ if (isset($_SESSION['user_id'])) {
     $stmt = $pdo->prepare($sql);
     $stmt->execute(['comment' => $comment, 'users_id' => $users_id, 'route_id' => $route_id]);
 } else {
-    echo 'You must be logged in to comment.';
+    http_response_code(403);
+    die("Access denied!");
 }

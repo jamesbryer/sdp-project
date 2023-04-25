@@ -96,7 +96,7 @@ function submitComment(event) {
     // Send the comment to the server using AJAX
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
-      if (xhr.readyState === XMLHttpRequest.DONE && comment !== "") {
+      if (xhr.status === 200 && comment !== "") {
         // Handle not logged in error
         console.log("Comment submitted!");
         // Clear the comment input
@@ -108,6 +108,10 @@ function submitComment(event) {
         commentSubmitBtn.addEventListener("click", submitComment);
         //refresh comments to show new comment
         getComments(routeID, addCommentsToArea);
+      } else if (xhr.status === 403) { // Access denied error
+        console.log("Access denied!");
+        document.getElementById("comment-input").value = "";
+        document.getElementById("comment-input").placeholder = "Please log in to comment!";
       }
     };
     xhr.open("POST", "db-request/add-comment.php");
@@ -121,14 +125,15 @@ function submitComment(event) {
 
 // Define the function for adding comments to the comment area
 function addCommentsToArea(comments) {
+  //set the comment area to display
   var infobox = document.getElementById("info-box");
   infobox.style.display = "block";
+  //clear the comment area
   var commentArea = document.getElementById("comment-area");
   commentArea.innerHTML = "";
 
   console.log("Adding comments...");
   for (var i = 0; i < comments.length; i++) {
-    console.log("Comment added!");
     var comment = document.createElement("p");
     comment.innerHTML = comments[i].comment;
     commentArea.appendChild(comment);
@@ -139,20 +144,6 @@ function addCommentsToArea(comments) {
   commentSubmitBtn.addEventListener("click", submitComment);
 }
 
-// Define the function for making an AJAX request to get comments
-function getComments(routeID, callback) {
-  var xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      var comments = JSON.parse(xhr.responseText);
-      callback(comments);
-    }
-  };
-  console.log("Making db request...");
-  url = "db-request/get_comments.php?routeID=" + routeID;
-  xhr.open("GET", url);
-  xhr.send();
-}
 
 function getUserLocation(callback) {
   if (navigator.geolocation) {
@@ -240,5 +231,9 @@ function loadMap(routes) {
     // Get the comments for the selected route
     getComments(selectedRoute.id, addCommentsToArea);
     createWazeLink(selectedRoute.start_lat, selectedRoute.start_long, selectedRoute.end_lat, selectedRoute.end_long);
+    //reset existing value
+    document.getElementById("comment-input").value = "";
+    //reset placeholder text
+    document.getElementById("comment-input").placeholder = "Enter your comment";
   });
 }
