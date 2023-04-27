@@ -12,8 +12,8 @@ include "../header.php";
         </div>
     </div>
     <div class="row" id="buttons">
-        <div class="col"><button id="submit-btn" class="btn btn-outline-secondary btn-block">Submit</button></div>
-        <div class="col"><button id="reset-btn" class="btn btn-outline-secondary btn-block">Reset</button></div>
+        <div class="col"><button id="submit-btn" class="btn btn-primary btn-block">Submit</button></div>
+        <div class="col"><button id="reset-btn" class="btn btn-outline-primary btn-block">Reset</button></div>
     </div>
     <div id="map" style="margin-top: 10px;"></div>
 </div>

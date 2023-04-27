@@ -99,7 +99,7 @@ function submitComment(event) {
       if (xhr.status === 200 && comment !== "") {
         // Handle not logged in error
         console.log("Comment submitted!");
-        // Clear the comment input
+        // Clear the comment input and add confirmation message
         document.getElementById("comment-input").value = "";
         document.getElementById("comment-input").placeholder = "Thanks for your comment!";
         // Remove the event listener to prevent multiple submissions
@@ -144,7 +144,6 @@ function addCommentsToArea(comments) {
   commentSubmitBtn.addEventListener("click", submitComment);
 }
 
-
 function getUserLocation(callback) {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -159,7 +158,7 @@ function getUserLocation(callback) {
   }
 }
 
-function createWazeLink(start_lat, start_lon, end_lat, end_long) {
+function createGmapLink(start_lat, start_lon, end_lat, end_long) {
   //get link element
   var wazeButton = document.getElementById("gmap-link");
   //empty waze button
@@ -174,20 +173,17 @@ function createWazeLink(start_lat, start_lon, end_lat, end_long) {
   wazeButton.style.display = "block";
 }
 
-
 function loadMap(routes) {
-
-
+  // create directions service
   var directionsService = new google.maps.DirectionsService();
   var directionsDisplay = new google.maps.DirectionsRenderer();
-
+  //add directions service to map
   directionsDisplay.setMap(map);
 
+  //delete any existing options from the dropdown
   var routeSelect = document.getElementById("route-select");
-
-  //delete any existing options
   for (var i = routeSelect.options.length - 1; i >= 0; i--) {
-    //dont remove the first option which is the select a radius option
+    //dont remove the first option which is the "select a route" option
     if (i != 0) {
       routeSelect.remove(i);
     }
@@ -201,12 +197,13 @@ function loadMap(routes) {
     routeSelect.appendChild(option);
   }
 
-  // Handle form submission
+  // Event listener on route select dropdown
   routeSelect.addEventListener("change", function (event) {
+    //prevent default behavior
     event.preventDefault();
-
+    // get the selected route
     var selectedRoute = routes[routeSelect.selectedIndex - 1];
-
+    // set the route lat and long as LatLng objects
     var start = new google.maps.LatLng(
       parseFloat(selectedRoute.start_lat),
       parseFloat(selectedRoute.start_long)
@@ -216,12 +213,14 @@ function loadMap(routes) {
       parseFloat(selectedRoute.end_long)
     );
 
+    // set the directions request variables
     var request = {
       origin: start,
       destination: end,
       travelMode: google.maps.TravelMode.DRIVING,
     };
 
+    // display the route on the map
     directionsService.route(request, function (result, status) {
       if (status == google.maps.DirectionsStatus.OK) {
         directionsDisplay.setDirections(result);
@@ -230,10 +229,11 @@ function loadMap(routes) {
 
     // Get the comments for the selected route
     getComments(selectedRoute.id, addCommentsToArea);
-    createWazeLink(selectedRoute.start_lat, selectedRoute.start_long, selectedRoute.end_lat, selectedRoute.end_long);
-    //reset existing value
+    // Create the Google Maps link
+    createGmapLink(selectedRoute.start_lat, selectedRoute.start_long, selectedRoute.end_lat, selectedRoute.end_long);
+    // Reset existing value
     document.getElementById("comment-input").value = "";
-    //reset placeholder text
+    // Reset placeholder text
     document.getElementById("comment-input").placeholder = "Enter your comment";
   });
 }
