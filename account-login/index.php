@@ -8,7 +8,7 @@ if (isset($_SESSION['user_uid'])) {
     exit();
 }
 ?>
-<div style="padding-top: 50px;"></div>
+<div style="padding-top: 10px;"></div>
 <div class="container">
     <div class="row">
         <div class="col-md">
