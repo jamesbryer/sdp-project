@@ -1,6 +1,6 @@
 <?php
 include "header.php";
-?>
+include_once "/config/conf.php";; ?>
 
 <div class="container" id="container">
     <div class="row">
@@ -8,8 +8,7 @@ include "header.php";
             <form id="location-form">
                 <div class="row" style="padding-top: 10px; padding-bottom:10px;">
                     <div class="col">
-                        <input id="search-box" type="search" placeholder="Enter your location"
-                            class="form-control centre" required />
+                        <input id="search-box" type="search" placeholder="Enter your location" class="form-control centre" required />
                     </div>
                 </div>
                 <div class="row" style="padding-bottom: 10px;">
@@ -29,8 +28,7 @@ include "header.php";
                 </div>
                 <div class="row">
                     <div class="col">
-                        <select id="route-select" name="route" class="custom-select mr-sm-2 centre"
-                            style="width: 100%;">
+                        <select id="route-select" name="route" class="custom-select mr-sm-2 centre" style="width: 100%;">
                             <option value="" selected disabled>Select a Route</option>
                         </select>
                     </div>
@@ -42,10 +40,8 @@ include "header.php";
                         <div class="form-control">
                             <h5>Comments:</h5>
                             <div id="comment-area"></div>
-                            <input style="margin-bottom: 3px;" id="comment-input" type="text"
-                                placeholder="Enter your comment" class="form-control" required />
-                            <input type="button" value="Comment" class="btn btn-primary form-control btn-sm"
-                                id="comment-submit">
+                            <input style="margin-bottom: 3px;" id="comment-input" type="text" placeholder="Enter your comment" class="form-control" required />
+                            <input type="button" value="Comment" class="btn btn-primary form-control btn-sm" id="comment-submit">
                         </div>
                     </div>
                 </div>
@@ -63,18 +59,14 @@ include "header.php";
 
 
 </div>
-<script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4zHL_BVdWGuaMWXwxk4iCNKlGNF-BJoU&region=UK&libraries=places&callback=Function.prototype">
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4zHL_BVdWGuaMWXwxk4iCNKlGNF-BJoU&region=UK&libraries=places&callback=Function.prototype">
 </script>
 <script src="script.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
 </script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
 </script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
 </script>
 
 </body>
