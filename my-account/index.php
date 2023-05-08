@@ -1,33 +1,19 @@
 <?php
 
 include "../header.php";
-include "includes/get-comments.inc.php";
-include "includes/get-likes.inc.php";
+include_once "../config/conf.php";
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../");
     exit();
+} else {
+    //create page displaying User ID and Username from session using Bootstrap
+    $user_id = $_SESSION['user_id'];
+    $username = $_SESSION['user_uid'];
+    echo "<div class='container'><div class='row'><div class='col-md'><div class='index-login-login'><h3>My Account</h3><p>User ID: $user_id</p><p>Username: $username</p></div></div></div></div>";
 }
 
-if (isset($_SESSION["comments"])) {
-    $comments = $_SESSION["comments"];
-    foreach ($comments as $comment) {
-        echo $comment["comment"];
-        echo "<br>";
-    }
-} else {
-    echo "No comments!";
-}
-if (isset($_SESSION["likes"])) {
-    $likes = $_SESSION["likes"];
-    echo "You like these routes: <br>";
-    foreach ($likes as $like) {
-        echo $like["route_id"];
-        echo "<br>";
-    }
-} else {
-    echo "No likes!";
-}
+
 
 ?>
 

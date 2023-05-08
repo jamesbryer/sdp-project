@@ -55,7 +55,7 @@ if (isset($_GET['error'])) {
                         <input class="form-control centre" type="password" name="pwdrepeat"
                             placeholder="Repeat password" required>
                     </div>
-                    <div class="form-group"><input class="form-control centre" type="text" name="email"
+                    <div class="form-group"><input class="form-control centre" type="email" name="email"
                             placeholder="Email" required>
                     </div>
                     <div class="form-group">
