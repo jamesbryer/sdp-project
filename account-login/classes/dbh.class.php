@@ -1,15 +1,15 @@
 <?php
-
+include_once "../../config/conf.php";
 class Dbh
 {
     protected function connect()
     {
         // Connect to the MySQL database using PDO
-        $host = 'localhost';
-        $port = '8888';
-        $dbname = 'routes';
-        $username = 'root';
-        $password = 'root';
+        $host = DB_SERVER;
+        $port = DB_PORT;
+        $dbname = DB_NAME;
+        $username = DB_USERNAME;
+        $password = DB_PASSWORD;
 
         $dsn = "mysql:host=$host;port=$port;dbname=$dbname;";
         $options = [

@@ -1,12 +1,24 @@
 <?php
 
 include "../header.php";
+include_once "../config/conf.php";
 
 //redirect user from login page if they are already logged in
 if (isset($_SESSION['user_uid'])) {
     header("Location: ../");
     exit();
 }
+
+//if there are paramenters for error/confirmation messages, display them (errors are held in conf.php)
+if (isset($_GET['error'])) {
+    $error = $_GET['error'];
+    if (array_key_exists($error, ERROR_MESSAGES)) {
+        echo "<div class='alert alert-danger' role='alert'>" . ERROR_MESSAGES[$error] . "</div>";
+    }
+} elseif (isset($_GET['signup']) && $_GET['signup'] == 'success') {
+    echo "<div class='alert alert-success' role='alert'>Sign up successful!</div>";
+}
+
 ?>
 <div style="padding-top: 10px;"></div>
 <div class="container">

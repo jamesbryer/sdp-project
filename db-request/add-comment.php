@@ -1,6 +1,7 @@
 <?php
 //start session to allow access to session variables
 session_start();
+include_once "../config/conf.php";
 //if user is logged in, allow comment to be submitted
 if (isset($_SESSION['user_id'])) {
     // Get the coordinates from the AJAX request
@@ -9,11 +10,11 @@ if (isset($_SESSION['user_id'])) {
     $users_id = $_SESSION['user_id'];
 
     // Connect to the MySQL database using PDO
-    $host = 'localhost';
-    $port = '8888';
-    $dbname = 'routes';
-    $username = 'root';
-    $password = 'root';
+    $host = DB_SERVER;
+    $port = DB_PORT;
+    $dbname = DB_NAME;
+    $username = DB_USERNAME;
+    $password = DB_PASSWORD;
 
     $dsn = "mysql:host=$host;port=$port;dbname=$dbname;";
     $options = [

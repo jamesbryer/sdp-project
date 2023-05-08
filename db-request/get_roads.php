@@ -1,9 +1,13 @@
 <?php
+include_once "../config/conf.php";
+// Connect to the MySQL database using PDO
+$host = DB_SERVER;
+$port = DB_PORT;
+$dbname = DB_NAME;
+$username = DB_USERNAME;
+$password = DB_PASSWORD;
 
-// Connect to the database
-$dsn = 'mysql:host=localhost;port=8888;dbname=routes;';
-$username = 'root';
-$password = 'root';
+$dsn = "mysql:host=$host;port=$port;dbname=$dbname;";
 
 try {
     $pdo = new PDO($dsn, $username, $password);

@@ -1,5 +1,6 @@
 <?php
 include "../header.php";
+include_once "../config/conf.php";
 ?>
 <link rel="stylesheet" href="styles.css">
 <div class="container">
@@ -31,8 +32,7 @@ include "../header.php";
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
 </script>
 
-<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtwLJf7L22miHaKQlI9StgOIpa2XdYaPk&callback=initMap">
+<script async defer src="<?php echo API_URL_FRONT . API_KEY_ADD_NEW . ADD_NEW_URL_BACK; ?>">
 </script>
 </body>
 

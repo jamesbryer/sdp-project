@@ -22,7 +22,7 @@ if (isset($_POST["submit"])) {
 
 
     // going back to front page
-    header("location: ../index.php?error=none");
+    header("location: ../index.php?signup=success");
 } else {
     header("location: ../account-login/index.php?error=nodata");
 }
